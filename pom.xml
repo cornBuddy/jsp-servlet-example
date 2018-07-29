@@ -15,6 +15,10 @@
     <name>jsp-servlet-example Maven Webapp</name>
     <url>http://maven.apache.org</url>
 
+    <build>
+        <finalName>jsp-servlet-example</finalName>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
