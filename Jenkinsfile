@@ -20,7 +20,6 @@ pipeline {
             agent {
                 docker {
                     image 'williamyeh/ansible:alpine3'
-                    args '-v $(pwd):/workdir -w /workdir'
                 }
             }
             steps {
