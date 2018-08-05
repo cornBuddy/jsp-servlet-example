@@ -18,11 +18,12 @@ pipeline {
                 docker {
                     image 'williamyeh/ansible:debian9'
                     args '-v /usr/bin/docker:/usr/bin/docker \
-                          -v /var/run/docker.sock:/var/run/docker.sock \
-                          -v /usr/lib/x86_64-linux-gnu/libltdl.so.7:/usr/lib/x86_64-linux-gnu/libltdl.so.7'
+                          -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
             steps {
+                sh 'apt-get upgrade -y'
+                sh 'apt-get install -y libltdl-dev'
                 sh 'docker run hello-world'
             }
         }
