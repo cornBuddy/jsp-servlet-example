@@ -22,6 +22,7 @@ pipeline {
                 }
             }
             steps {
+                sh 'echo $PATH'
                 sh 'docker run hello-world'
                 sh 'ls -l'
                 sh 'pwd'
