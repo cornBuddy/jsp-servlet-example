@@ -9,10 +9,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'ls -l'
-                sh 'pwd'
-                sh 'mvn --version'
-                sh 'mvn package'
+                sh 'mvn clean package'
             }
         }
 
@@ -20,10 +17,14 @@ pipeline {
             agent {
                 docker {
                     image 'williamyeh/ansible:alpine3'
+                    args '-v /usr/bin/docker:/usr/bin/docker \
+                          -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
             steps {
-                sh 'ansible-playbook --version'
+                sh 'docker run hello-world'
+                sh 'ls -l'
+                sh 'pwd'
             }
         }
     }
