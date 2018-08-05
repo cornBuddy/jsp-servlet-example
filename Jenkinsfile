@@ -1,26 +1,30 @@
-// https://jenkins.io/doc/book/pipeline/jenkinsfile/
-// build in a maven container
-// leave tests for a while
-// send builded on the first step war file to all tomcat instances
 pipeline {
-    agent any
+    agent none
 
     stages {
         stage('Build') {
-            steps {
-                echo 'building...'
+            agent {
+                docker {
+                    image 'maven:3-alpine'
+                }
             }
-        }
-
-        stage('Test') {
             steps {
-                echo 'testing...'
+                sh 'ls -l'
+                sh 'pwd'
+                sh 'mvn --version'
+                sh 'mvn package'
             }
         }
 
         stage('Deploy') {
+            agent {
+                docker {
+                    image 'williamyeh/ansible:alpine3'
+                    args '-v $(pwd):/workdir -w /workdir'
+                }
+            }
             steps {
-                echo 'deploying...'
+                sh 'ansible-playbook --version'
             }
         }
     }
