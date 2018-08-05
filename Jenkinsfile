@@ -18,14 +18,12 @@ pipeline {
                 docker {
                     image 'williamyeh/ansible:debian9'
                     args '-v /usr/bin/docker:/usr/bin/docker \
-                          -v /var/run/docker.sock:/var/run/docker.sock'
+                          -v /var/run/docker.sock:/var/run/docker.sock \
+                          -v /usr/lib/x86_64-linux-gnu/libltdl.so.7:/usr/lib/x86_64-linux-gnu/libltdl.so.7'
                 }
             }
             steps {
-                sh 'echo $PATH'
                 sh 'docker run hello-world'
-                sh 'ls -l'
-                sh 'pwd'
             }
         }
     }
