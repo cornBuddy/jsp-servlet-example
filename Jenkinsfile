@@ -27,8 +27,8 @@ pipeline {
                 sh 'cp target/jsp-servlet-example.war deploy-to-tomcat-cluster'
                 sh 'cd deploy-to-tomcat-cluster'
                 ansiblePlaybook(
-                    inventory: 'deploy-tomcat-cluster/inventory',
-                    playbook: 'deploy-tomcat-cluster/playbook.yml',
+                    inventory: 'deploy-to-tomcat-cluster/inventory',
+                    playbook: 'deploy-to-tomcat-cluster/playbook.yml',
                     extraVars: [
                         deploy_uri: 'jsp-servlet-example',
                         artifact_path: 'deploy-to-tomcat-cluster/jsp-servlet-example.war',
