@@ -25,13 +25,15 @@ pipeline {
                 sh 'rm -rf deploy-to-tomcat-cluster || true'
                 sh 'git clone https://github.com/cornBuddy/deploy-to-tomcat-cluster'
                 sh 'cp target/jsp-servlet-example.war deploy-to-tomcat-cluster'
-                sh 'cd deploy-to-tomcat-cluster'
+                dir './deploy-to-tomcat-cluster'
+                sh 'ls -la'
+                sh 'pwd'
                 ansiblePlaybook(
-                    inventory: 'deploy-to-tomcat-cluster/inventory',
-                    playbook: 'deploy-to-tomcat-cluster/playbook.yml',
+                    inventory: 'inventory',
+                    playbook: 'playbook.yml',
                     extraVars: [
                         deploy_uri: 'jsp-servlet-example',
-                        artifact_path: 'deploy-to-tomcat-cluster/jsp-servlet-example.war',
+                        artifact_path: './jsp-servlet-example.war',
                     ],
                 )
             }
