@@ -16,7 +16,7 @@ pipeline {
         stage('Deploy') {
             agent {
                 docker {
-                    image 'williamyeh/ansible:alpine3'
+                    image 'williamyeh/ansible:debian9'
                     args '-v /usr/bin/docker:/usr/bin/docker \
                           -v /var/run/docker.sock:/var/run/docker.sock'
                 }
