@@ -32,8 +32,8 @@ pipeline {
                         extraVars: [
                             deploy_uri: 'jsp-servlet-example',
                             artifact_path: './jsp-servlet-example.war',
-                            deployer: build.environment.get("DEPLOYER"),
-                            deployer_password: build.environment.get("DEPLOYER_PASSWORD"),
+                            deployer: ${env.DEPLOYER},
+                            deployer_password: ${env.DEPLOYER_PASSWORD},
                         ],
                     )
                 }
