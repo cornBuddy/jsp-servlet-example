@@ -28,7 +28,7 @@ pipeline {
                 dir('./deploy-to-tomcat-cluster') {
                     ansiblePlaybook(
                         inventory: 'inventory',
-                        playbook: 'playbook.yml',
+                        playbook: 'rolling-update.yml',
                         extraVars: [
                             deploy_uri: 'jsp-servlet-example',
                             artifact_path: './jsp-servlet-example.war',
