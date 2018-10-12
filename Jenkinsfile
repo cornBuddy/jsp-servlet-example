@@ -1,26 +1,18 @@
 #!groovy
 
-node {
-    stage('Build') {
-        agent {
-            docker {
-                image 'maven:3-alpine'
-            }
-        }
+stage('Build') {
+    docker.image('maven:3-alpine').inside {
         steps {
             sh 'mvn clean package'
         }
     }
+}
 
+node {
     stage('Deploy') {
-        agent any
-        when {
-            expression {
-                currentBuild.result == null \
-                    || currentBuild.result == 'SUCCESS'
-            }
-        }
-        steps {
+        isBuildSucceeded = currentBuild.result == null \
+            || currentBuild.result == 'SUCCESS'
+        if (isBuildSucceeded) {
             sh 'rm -rf deploy-to-tomcat-cluster || true'
             sh 'git clone https://github.com/cornBuddy/deploy-to-tomcat-cluster'
             sh 'cp target/jsp-servlet-example.war deploy-to-tomcat-cluster'
