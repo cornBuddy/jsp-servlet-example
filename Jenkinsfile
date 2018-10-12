@@ -3,6 +3,7 @@
 node {
     docker.image('maven:3-alpine').inside {
         stage('Build') {
+            sh 'ls -lah ./'
             sh 'mvn clean package'
         }
     }
