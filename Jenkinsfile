@@ -6,7 +6,7 @@ node {
     }
 
     docker.image('maven:3-alpine')
-        .withRun("--env SONAR_URL ${env.SONAR_URL} -v ./settings.xml:/root/.m2/settings.xml") {
+        .withRun("--env SONAR_URL ${env.SONAR_URL} -v settings.xml:/root/.m2/settings.xml") {
             stage('Code analysis') {
                 sh 'ls -lah ./'
                 sh 'mvn clean verify sonar:sonar'
