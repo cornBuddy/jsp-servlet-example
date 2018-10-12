@@ -6,10 +6,7 @@ node {
     }
 
     docker.image('maven:3-alpine')
-        .inside("--env SONAR_URL=${env.SONAR_URL}" \
-                " -v ${env.WORKSPACE}/settings.xml:/root/.m2/settings.xml" \
-                " --user root"
-            ) {
+        .inside("--env SONAR_URL=${env.SONAR_URL} -v ${env.WORKSPACE}/settings.xml:/root/.m2/settings.xml --user root") {
             stage('Code analysis') {
                 sh 'whoami'
                 sh 'cat /root/.m2/settings.xml'
