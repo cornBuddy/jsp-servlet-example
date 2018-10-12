@@ -5,12 +5,19 @@ node {
         git 'https://github.com/cornBuddy/jsp-servlet-example/'
     }
 
-    docker.image('maven:3-alpine').inside {
-        stage('Build') {
-            sh 'ls -lah ./'
-            sh 'mvn clean package'
+    docker.image('maven:3-alpine')
+        .withRun("--env SONAR_URL ${env.SONAR_URL}" \
+                 " -v ./settings.xml:/root/.m2/settings.xml"
+        ) {
+            stage('Code analysis') {
+                sh 'ls -lah ./'
+                sh 'mvn clean verify sonar:sonar'
+            }
+
+            stage('Build') {
+                sh 'mvn clean package'
+            }
         }
-    }
 
     stage('Deploy') {
         isBuildSucceeded = currentBuild.result == null \
