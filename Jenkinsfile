@@ -8,6 +8,7 @@ node {
     docker.image('maven:3-alpine')
         .inside("--env SONAR_URL=${env.SONAR_URL} -v ${env.WORKSPACE}/settings.xml:/root/.m2/settings.xml") {
             stage('Code analysis') {
+                sh 'whoami'
                 sh 'cat /root/.m2/settings.xml'
                 sh 'mvn clean verify sonar:sonar'
             }
