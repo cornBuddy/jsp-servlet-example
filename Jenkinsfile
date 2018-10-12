@@ -1,14 +1,12 @@
 #!groovy
 
-stage('Build') {
+node {
     docker.image('maven:3-alpine').inside {
-        steps {
+        stage('Build') {
             sh 'mvn clean package'
         }
     }
-}
 
-node {
     stage('Deploy') {
         isBuildSucceeded = currentBuild.result == null \
             || currentBuild.result == 'SUCCESS'
