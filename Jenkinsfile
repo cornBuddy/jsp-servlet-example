@@ -6,9 +6,9 @@ node {
     }
 
     docker.image('maven:3-alpine')
-        .inside("--env SONAR_URL=${env.SONAR_URL} -v ${env.WORKSPACE}/m2:/root/.m2 --user root") {
+        .inside("--env SONAR_URL=${env.SONAR_URL} -v ${env.WORKSPACE}/m2:/root/.m2 --user root --network tomcat-net") {
             stage('Code analysis') {
-                sh 'ping -c 4 http://sonarqube'
+                sh 'ping -c 4 sonarqube'
                 sh 'cat /root/.m2/settings.xml'
                 sh 'mvn clean verify sonar:sonar'
             }
