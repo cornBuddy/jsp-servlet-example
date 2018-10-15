@@ -3,17 +3,12 @@
 node {
     stage('Pull from SCM') {
         git 'https://github.com/cornBuddy/jsp-servlet-example/'
-        sh 'ls -la ./'
-        sh 'cat ./settings.xml'
-        sh "ls -la ${env.WORKSPACE}"
-        sh "cat ${env.WORKSPACE}/settings.xml"
     }
 
     docker.image('maven:3-alpine')
-        .inside("--env SONAR_URL=${env.SONAR_URL} -v ${env.WORKSPACE}/settings.xml:/root/.m2/settings.xml --user root") {
+        .inside("--env SONAR_URL=${env.SONAR_URL} -v ${env.WORKSPACE}/m2:/root/.m2 --user root") {
             stage('Code analysis') {
-                sh 'echo $SONAR_URL'
-                sh 'ping -c 4 $SONAR_URL'
+                sh 'ping -c 4 http://sonarqube'
                 sh 'cat /root/.m2/settings.xml'
                 sh 'mvn clean verify sonar:sonar'
             }
