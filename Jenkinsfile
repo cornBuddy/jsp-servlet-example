@@ -6,14 +6,15 @@ node {
         sh 'ls -la ./'
         sh 'cat ./settings.xml'
         sh "ls -la ${env.WORKSPACE}"
+        sh "cat ${env.WORKSPACE}/settings.xml"
     }
 
     docker.image('maven:3-alpine')
         .inside("--env SONAR_URL=${env.SONAR_URL} -v ${env.WORKSPACE}/settings.xml:/root/.m2/settings.xml --user root") {
             stage('Code analysis') {
-                sh 'cat /root/.m2/settings.xml'
                 sh 'echo $SONAR_URL'
                 sh 'ping -c 4 $SONAR_URL'
+                sh 'cat /root/.m2/settings.xml'
                 sh 'mvn clean verify sonar:sonar'
             }
 
