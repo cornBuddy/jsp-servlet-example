@@ -4,6 +4,7 @@ node {
     stage('Pull from SCM') {
         git 'https://github.com/cornBuddy/jsp-servlet-example/'
         sh 'ls -la ./'
+        sh 'cat ./settings.xml'
     }
 
     docker.image('maven:3-alpine')
